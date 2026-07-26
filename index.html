@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>poor fools</title>
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="poor fools">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin>
+
+<style>
+  :root {
+    --black: #000000;
+    --ink:   #ffffff;
+    --muted: #7d7d86;
+    --line:  rgba(255,255,255,.13);
+
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background: var(--black);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #stars {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: block;
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 60rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 6vw, 4rem);
+  }
+
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(2.5rem, 7vh, 4rem);
+    padding-block: clamp(4rem, 10vh, 7rem);
+  }
+
+  .crew {
+    display: flex;
+    justify-content: center;
+    gap: clamp(2rem, 8vw, 4.5rem);
+  }
+
+  .fool {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .95rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .fool img {
+    width: clamp(84px, 20vw, 124px);
+    height: clamp(84px, 20vw, 124px);
+    border-radius: 14px;
+    object-fit: cover;
+    background: #111;
+  }
+  .fool:focus-visible { outline: none; }
+
+  .fool span {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .02em;
+    color: var(--muted);
+    transition: color .35s ease;
+  }
+  .fool:hover span, .fool:focus-visible span { color: var(--ink); }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2.25rem, 8vw, 4.25rem);
+    font-weight: 500;
+    letter-spacing: -.02em;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .org {
+    position: fixed;
+    top: clamp(1.25rem, 3vw, 2rem);
+    right: clamp(1.25rem, 3vw, 2rem);
+    z-index: 2;
+    display: block;
+    color: var(--muted);
+    transition: color .3s ease;
+  }
+  .org svg {
+    display: block;
+    width: clamp(28px, 2.4vw, 32px);
+    height: auto;
+  }
+  .org:hover, .org:focus-visible {
+    color: var(--ink);
+    outline: none;
+  }
+
+  .works { padding-block: clamp(4rem, 12vh, 8rem) 0; }
+
+  .works h2 {
+    margin: 0 0 1.75rem;
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1px;
+  }
+
+  /* Per-card hairline; a grid background shows through empty cells. */
+  .card {
+    display: block;
+    padding: 1.5rem 1.4rem 1.6rem;
+    text-decoration: none;
+    color: inherit;
+    background: var(--black);
+    box-shadow: 0 0 0 1px var(--line);
+    transition: background .3s ease;
+  }
+  .card:hover, .card:focus-visible {
+    background: rgba(255,255,255,.05);
+    outline: none;
+  }
+  .card h3 {
+    margin: 0 0 .45rem;
+    font-size: .95rem;
+    font-weight: 500;
+  }
+  .card p {
+    margin: 0;
+    font-size: .85rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<main>
+  <a class="org" href="https://github.com/poor-fools" rel="noopener" aria-label="poor fools on GitHub">
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+      <path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+    </svg>
+  </a>
+
+  <header class="hero">
+    <div class="crew" id="crew"></div>
+    <h1>poor fools</h1>
+  </header>
+
+  <div id="works"></div>
+</main>
+
+<script>
+(() => {
+  'use strict';
+
+  const CREW = ['sagemachine', 'ryanhtruong'];
+
+  // { name, blurb, href }
+  const PROJECTS = [];
+
+  const SPEED = 1.35;
+
+  const $ = (sel) => document.querySelector(sel);
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  $('#crew').innerHTML = CREW.map((user) => `
+    <a class="fool" href="https://github.com/${user}" rel="noopener">
+      <img src="https://github.com/${user}.png?size=240" alt="${user}"
+           width="240" height="240" loading="eager">
+      <span>${user}</span>
+    </a>`).join('');
+
+  if (PROJECTS.length) {
+    $('#works').innerHTML = `
+      <section class="works">
+        <h2>works</h2>
+        <div class="grid">
+          ${PROJECTS.map((p) => `
+            <a class="card" href="${p.href}" rel="noopener">
+              <h3>${p.name}</h3>
+              <p>${p.blurb}</p>
+            </a>`).join('')}
+        </div>
+      </section>`;
+  }
+
+  const cv = $('#stars');
+  const ctx = cv.getContext('2d', { alpha: false });
+
+  const COUNT = 300;
+  const DEPTH = 1000;
+  const FOCAL = 240;
+
+  let stars = [];
+  let w = 0, h = 0, cx = 0, cy = 0;
+  let spreadX = 3000, spreadY = 3000;
+
+  const sprite = document.createElement('canvas');
+  sprite.width = sprite.height = 64;
+  {
+    const s = sprite.getContext('2d');
+    const g = s.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0,   'rgba(255,255,255,1)');
+    g.addColorStop(.24, 'rgba(255,255,255,.98)');
+    g.addColorStop(.46, 'rgba(255,255,255,.34)');
+    g.addColorStop(.72, 'rgba(255,255,255,.06)');
+    g.addColorStop(1,   'rgba(255,255,255,0)');
+    s.fillStyle = g;
+    s.fillRect(0, 0, 64, 64);
+  }
+
+  const spawn = (z) => ({
+    x: (Math.random() - 0.5) * spreadX,
+    y: (Math.random() - 0.5) * spreadY,
+    z: z ?? Math.random() * DEPTH,
+    mag: 0.4 + Math.random() * 0.6,
+  });
+
+  const resize = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = innerWidth;
+    h = innerHeight;
+    cx = w / 2;
+    cy = h / 2;
+    cv.width = w * dpr;
+    cv.height = h * dpr;
+    cv.style.width = w + 'px';
+    cv.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // per axis, so a star at max depth still lands inside the viewport
+    const reach = DEPTH / FOCAL;
+    spreadX = w * reach;
+    spreadY = h * reach;
+  };
+
+  const draw = () => {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+
+    for (const s of stars) {
+      const k = FOCAL / s.z;
+      const x = s.x * k + cx;
+      const y = s.y * k + cy;
+
+      if (x < -40 || x > w + 40 || y < -40 || y > h + 40) {
+        Object.assign(s, spawn(DEPTH));
+        continue;
+      }
+
+      const t = 1 - s.z / DEPTH;
+      const size = Math.min(4.4 + k * 4.7, 21);
+      ctx.globalAlpha = Math.min(1, s.mag * (0.48 + 0.52 * t));
+      ctx.drawImage(sprite, x - size / 2, y - size / 2, size, size);
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  let last = 0;
+  const frame = (now) => {
+    const dt = Math.min((now - last) || 16, 50) / 16;
+    last = now;
+
+    for (const s of stars) {
+      s.z -= SPEED * dt;
+      if (s.z < 1) Object.assign(s, spawn(DEPTH));
+    }
+
+    draw();
+    requestAnimationFrame(frame);
+  };
+
+  const populate = () => { stars = Array.from({ length: COUNT }, () => spawn()); };
+
+  const start = () => {
+    resize();
+    populate();
+    if (calm) { draw(); return; }
+    requestAnimationFrame((t) => { last = t; frame(t); });
+  };
+
+  // setting canvas.width wipes the bitmap
+  addEventListener('resize', () => {
+    resize();
+    if (calm) { populate(); draw(); }
+  }, { passive: true });
+
+  start();
+})();
+</script>
+
+</body>
+</html>
