@@ -1,0 +1,218 @@
+:root {
+  --black: #000000;
+  --ink:   #ffffff;
+  --muted: #7d7d86;
+  --line:  rgba(255,255,255,.13);
+
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+/* column flex all the way down, so .hero can take exactly the height the nav
+   leaves it — a 100svh hero under a static nav would overflow the viewport */
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--black);
+  color: var(--ink);
+  font-family: var(--sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+#stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: block;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 60rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 6vw, 4rem);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 8vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: -.02em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* static, not fixed: nothing here scrolls far enough to need a sticky bar, and
+   a fixed one over the starfield would need a backdrop to stay legible */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.1rem, 3vw, 1.9rem);
+  padding-block: clamp(1.15rem, 3vh, 1.75rem);
+}
+
+.nav a {
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .02em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .3s ease;
+}
+.nav a:hover, .nav a:focus-visible { color: var(--ink); }
+.nav a[aria-current="page"] { color: var(--ink); }
+
+.nav .gh { margin-left: auto; }
+.nav .gh svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* ---- landing ---- */
+
+.hero {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2.5rem, 7vh, 4rem);
+  padding-block: clamp(2rem, 8vh, 6rem);
+}
+
+/* holds the field off the type without reading as a shape of its own.
+   inset:0, not a negative inset — overhang below the block would add to
+   scrollHeight and give the page a phantom scrollbar. */
+.hero::before, .mid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 62% 52% at 50% 50%, rgba(0,0,0,.75), rgba(0,0,0,0) 72%);
+}
+
+.crew {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2rem, 8vw, 4.5rem);
+}
+
+.fool {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .95rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.fool img {
+  width: clamp(84px, 20vw, 124px);
+  height: clamp(84px, 20vw, 124px);
+  border-radius: 14px;
+  object-fit: cover;
+  background: #111;
+}
+
+.fool span {
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .02em;
+  color: var(--muted);
+  transition: color .35s ease;
+}
+.fool:hover span, .fool:focus-visible span { color: var(--ink); }
+
+/* ---- interior pages ---- */
+
+.page {
+  padding-block: clamp(3rem, 12vh, 6rem) clamp(2.5rem, 7vh, 4rem);
+}
+
+/* centred single-message page: 404. flex:1 fills what the nav leaves, and the
+   bottom padding lifts the block off true centre — optically it reads centred,
+   where a mathematically centred block reads low. */
+.mid {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.35rem;
+  text-align: center;
+  padding-bottom: clamp(2rem, 7vh, 4.5rem);
+}
+
+/* a line of prose; same type as a card body so interior pages read as one
+   family */
+.note {
+  margin: 0;
+  max-width: 32rem;
+  font-size: .85rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* auto-fit, not auto-fill: with one entry, auto-fill holds the empty tracks
+   open and the lone card reads as a mistake. identical once the row fills. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1px;
+}
+
+/* Per-card hairline; a grid background shows through empty cells. */
+.card {
+  display: block;
+  padding: 1.5rem 1.4rem 1.6rem;
+  text-decoration: none;
+  color: inherit;
+  background: var(--black);
+  box-shadow: 0 0 0 1px var(--line);
+  transition: background .3s ease;
+}
+.card:hover, .card:focus-visible { background: rgba(255,255,255,.05); }
+/* inset, so the ring does not bleed over the neighbouring card's hairline */
+.card:focus-visible {
+  outline-offset: -3px;
+  border-radius: 0;
+}
+.card h3 {
+  margin: 0 0 .45rem;
+  font-size: .95rem;
+  font-weight: 500;
+}
+.card p {
+  margin: 0;
+  font-size: .85rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+}
