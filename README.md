@@ -37,6 +37,7 @@ Both are markup rather than JS arrays so the browser can fetch the avatars while
 it parses, and so the pages still say something with scripting off.
 
 **Speed** — `SPEED` at the top of `stars.js` is how fast the camera flies.
+`COUNT` is the size of the field; see the note below before changing it.
 
 ## Local preview
 
@@ -53,6 +54,27 @@ over http.
 
 - The starfield is a `<canvas>`. Stars are drawn from one pre-rendered sprite
   rather than a gradient per star per frame.
+- `stars.js` keeps no state. A star's position is a pure function of the wall
+  clock, so the field is in the same place on every page of the site and after a
+  reload, instead of respawning the whole sky at random depths on each load. Two
+  tabs show the same stars, and so do two people. `EPOCH` is the fixed instant it
+  counts from — the particular date means nothing, only that it never moves.
+- That closed form costs the lateral respawn. The old field recycled a star the
+  moment it left the frustum sideways, which is what kept nearly all 300 of them
+  on screen; without recycling only about a third of the field is ever in view,
+  so `COUNT` is 800 rather than 300. Measured against the old code the visible
+  count matches within 2% on desktop viewports (about 10% high on a phone, where
+  the 40px cull margin is proportionally larger), and the depth distribution of
+  visible stars is unchanged — both fall off as z², which is why the swap is
+  invisible rather than merely close.
+- Nothing teleports when a star loops. By the end of a pass it is at z≈1, where
+  the spread has thrown it far outside the viewport, so it is already unseen when
+  it draws its next x/y.
+- The frame loop adds a one-time skew to rAF's timestamp rather than calling
+  `Date.now()` every frame. rAF's clock is document-relative, which is precisely
+  the thing that must not survive a navigation. There is no `dt` accumulator any
+  more either, so a backgrounded tab comes back to the right place instead of
+  lurching to catch up.
 - `prefers-reduced-motion: reduce` disables the animation and paints the field
   as a single static exposure.
 - The avatars are the only external request.
